@@ -1,0 +1,89 @@
+{% extends 'Admin/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table border="1">
+        <tr>
+          <td>Name</td>
+          <td>
+            <input
+              type="text"
+              name="txt_name"
+            />
+          </td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>
+              <input
+                type="text"
+                name="txt_contact"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>
+              <input
+                type="text"
+                name="txt_email"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Photo</td>
+            <td>
+              <input
+                type="file"
+                name="file_photo"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Password</td>
+            <td>
+              <input
+                type="text"
+                name="txt_password"
+              />
+            </td>
+          </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input type="submit" value="save" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    <table>
+      <tr>
+        <th>Si No</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+      {% for i in master %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.master_name}}</td>
+        <td>{{i.master_contact}}</td>
+        <td>{{i.master_email}}</td>
+        <td>
+            <a href="{% url 'admin:DeleteMaster' i.master_id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
+{% endblock content %}

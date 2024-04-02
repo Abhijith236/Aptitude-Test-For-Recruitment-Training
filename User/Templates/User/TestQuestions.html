@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attended Questions</title>
+    <style>
+        .correct { background-color: green; }
+        .wrong_guess { background-color: red; }
+        .user_chose_different_option { background-color: yellow; }
+        .original_answer_not_found { background-color: gray; } 
+    </style>
+</head>
+<body>
+    <h1>Attended Questions </h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in attended_questions %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ question.question_id.question_content }}</td>
+                <td class="{% if question.correctness == 'correct' %} correct {% endif %}">{{ question.question_id.option_1 }}</td>
+                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_2 }}</td>
+                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_3 }}</td>
+                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_4 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

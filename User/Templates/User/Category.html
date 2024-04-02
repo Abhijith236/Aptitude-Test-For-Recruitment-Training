@@ -1,0 +1,30 @@
+{% extends 'User/Include.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for category in categories %}
+            <a class="col-md-3" href="{% url 'user:Questions' category.category_id %}" style="text-decoration: none;">
+                <div class="card mb-2 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ category.category_name }}</h5>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

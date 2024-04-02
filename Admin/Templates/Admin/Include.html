@@ -1,0 +1,24 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'admin:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewDistrict' %}">District</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewPlace' %}">Place</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewCategory' %}">Category</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:Master' %}">Master</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

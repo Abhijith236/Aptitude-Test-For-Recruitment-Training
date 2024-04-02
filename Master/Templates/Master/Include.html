@@ -1,0 +1,15 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'master:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'master:Questions' %}">Questions</a>
+  </li>
+  <li>
+    <a href="{% url 'master:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attended Test Details </title>
+</head>
+<body>
+    <h1>Attended Test Details (Performance : {{mae}})</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>SL. No</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in attended_tests %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ test.test_date }}</td>
+                    <td>{{ test.test_start_time }}</td>
+                    <td><a href="{% url 'user:TestQuestions' test.test_id %}">View Questions</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

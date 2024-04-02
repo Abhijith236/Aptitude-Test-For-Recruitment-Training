@@ -1,0 +1,15 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'guest:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'guest:UserRegistration' %}">User</a>
+  </li>
+  <li>
+    <a href="{% url 'guest:Login' %}">Login</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}
