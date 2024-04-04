@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from Admin.models import *
 from Guest.models import *
 
-def HomePage(requset):
-    return render(requset,'Admin/HomePage.html')
+def HomePage(request):
+    return render(request,'Admin/HomePage.html')
 
 
 # Category Function Start

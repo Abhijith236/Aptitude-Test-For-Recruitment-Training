@@ -6,6 +6,7 @@ urlpatterns = [
     path('Category/', views.Category,name='Category'),
     path('Questions/<int:cid>', views.Questions,name='Questions'),
     path('Test/', views.Test,name='Test'),
+    path('PreviousTest/', views.PreviousTest,name='PreviousTest'),
     path('TestQuestions/<int:tid>', views.TestQuestions,name='TestQuestions'),
     path('Logout/', views.Logout,name='Logout'),
 ]

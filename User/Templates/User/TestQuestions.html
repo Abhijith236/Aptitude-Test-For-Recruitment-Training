@@ -3,39 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attended Questions</title>
+    <title id="timer">Online Test</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .correct { background-color: green; }
-        .wrong_guess { background-color: red; }
-        .user_chose_different_option { background-color: yellow; }
-        .original_answer_not_found { background-color: gray; } 
+        .green{
+            background-color: green;
+        }
+        .red{
+            background-color: red;
+        }
+        .blue{
+            background-color: blue;
+        }
     </style>
+    <script>
+        // Timer function to display countdown
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent ="Online Test   "+ minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = 0; // Timer ends
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var duration = 1800; // 30 minutes in seconds
+            var display = document.querySelector('#timer');
+            startTimer(duration, display);
+        };
+    </script>
 </head>
 <body>
-    <h1>Attended Questions </h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Question</th>
-                <th>Option 1</th>
-                <th>Option 2</th>
-                <th>Option 3</th>
-                <th>Option 4</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for question in attended_questions %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ question.question_id.question_content }}</td>
-                <td class="{% if question.correctness == 'correct' %} correct {% endif %}">{{ question.question_id.option_1 }}</td>
-                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_2 }}</td>
-                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_3 }}</td>
-                <td class="{% if question.correctness == 'correct' %} correct {% elif question.correctness == 'wrong_guess' %} wrong_guess {% elif question.correctness == 'user_chose_different_option' %} user_chose_different_option {% else %} original_answer_not_found {% endif %}">{{ question.question_id.option_4 }}</td>
-            </tr>
+    <div class="container">
+        
+        <form method="POST" >
+            {% csrf_token %}
+            {% for question in Questions %}
+            <div class="col-md-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Question {{ forloop.counter }}</h5>
+                        <p class="card-text">{{ question.question_id.question_content }}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item  
+                            {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_1 %}
+                                green
+                            {% elif question.question_id.option_1 == question.test_question_answer %}
+                                red
+                            {% elif question.question_id.option_1 == question.question_id.answer %}
+                                blue
+                            {% endif %}
+                            " >{{ question.question_id.option_1 }}</li>
+                            <li class="list-group-item 
+                            {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_2 %}
+                                green
+                            {% elif question.question_id.option_2 == question.test_question_answer %}
+                                red
+                            {% elif question.question_id.option_2 == question.question_id.answer %}
+                                blue
+                            {% endif %}
+                            " >{{ question.question_id.option_2 }} </li>
+                            <li class="list-group-item 
+                            {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_3 %}
+                                green
+                            {% elif question.question_id.option_3 == question.test_question_answer %}
+                                red
+                            {% elif question.question_id.option_3 == question.question_id.answer %}
+                                blue
+                            {% endif %}
+                            " >{{ question.question_id.option_3 }} </li>
+                            <li class="list-group-item 
+                            {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_4 %}
+                                green
+                            {% elif question.question_id.option_4 == question.test_question_answer %}
+                                red
+                            {% elif question.question_id.option_4 == question.question_id.answer %}
+                                blue
+                            {% endif %}
+                            " >{{ question.question_id.option_4 }} </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </form>
+        
+    </div>
 </body>
 </html>
