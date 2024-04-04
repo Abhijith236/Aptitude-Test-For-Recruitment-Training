@@ -120,41 +120,70 @@ def Test(request):
 
 
 def PreviousTest(request):
+    """
+    View function for displaying previous test information and calculating Mean Absolute Error (MAE).
+
+    Parameters:
+    - request: HttpRequest object containing metadata about the HTTP request.
+
+    Returns:
+    - Rendered HTML template displaying previous test information and MAE.
+
+    Algorithm:
+    1. Query the database to count the number of tests associated with the user.
+    2. If tests are found:
+        a. Retrieve attended tests with status '1' for the user.
+        b. Retrieve all tests (regardless of status) for the user, selecting 'test_date' and 'test_score' fields.
+        c. Convert 'test_date' field of each test to timestamp representation.
+        d. Convert the queryset of tests into a pandas DataFrame.
+        e. Define features (X) and target variable (y) for machine learning.
+        f. Train a Random Forest Regressor model using the features and target variable.
+        g. Make predictions using the trained model.
+        h. Calculate Mean Absolute Error (MAE) between actual and predicted test scores.
+    3. Render a template with the calculated MAE and attended test information.
+
+    """
+    # Count the number of tests associated with the user
     count = tbl_test.objects.filter(test_status='1', user_id=request.session['uid']).count()
-    mae =0
-    attended_tests=[]
-    if count>0:
+    
+    # Initialize variables for MAE and attended tests
+    mae = 0
+    attended_tests = []
+    
+    # If tests are found
+    if count > 0:
+        # Retrieve attended tests for the user
         attended_tests = tbl_test.objects.filter(test_status='1', user_id=request.session['uid'])
-        # Fetch data from tbl_test
+        
+        # Retrieve all tests for the user, selecting 'test_date' and 'test_score' fields
         tests = tbl_test.objects.filter(user_id=request.session['uid']).values('test_date', 'test_score')
         
-        # Feature Engineering
+        # Convert 'test_date' field of each test to timestamp representation
         for test in tests:
-            # Convert test_date to timestamp
             test['test_date'] = datetime.combine(test['test_date'], datetime.min.time()).timestamp()
         
-        # Create DataFrame from the queryset
+        # Convert the queryset of tests into a pandas DataFrame
         import pandas as pd
         df = pd.DataFrame(list(tests))
         
-        # Define features (X) and target variable (y)
+        # Define features (X) and target variable (y) for machine learning
         X = df[['test_date']]  # Feature: test_date
-        y = df['test_score']  # Target variable: test_score
+        y = df['test_score']    # Target variable: test_score
         
-        # Initialize the Random Forest Regressor
+        # Initialize Random Forest Regressor model
         model = RandomForestRegressor()
         
-        # Train the model (using the entire dataset as there's no split)
+        # Train the model
         model.fit(X, y)
         
         # Make predictions
         y_pred = model.predict(X)
         
-        # Evaluate the model (using the entire dataset as there's no split)
+        # Calculate Mean Absolute Error (MAE)
         mae = mean_absolute_error(y, y_pred)
-        
-    # Pass the results to the template
-    return render(request, 'User/PreviousTest.html', {'mae': mae,'attended_tests': attended_tests})
+    
+    # Render a template with MAE and attended test information
+    return render(request, 'User/PreviousTest.html', {'mae': mae, 'attended_tests': attended_tests})
 
 def TestQuestions(request, tid):
     attended_questions = tbl_test_question.objects.filter(test_id=tid)
