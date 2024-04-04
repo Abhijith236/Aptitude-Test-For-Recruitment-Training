@@ -40,7 +40,7 @@
 6. Install the required Python packages using pip:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirement.txt
     ```
 
 ## Usage
