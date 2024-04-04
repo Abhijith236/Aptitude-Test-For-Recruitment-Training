@@ -108,8 +108,7 @@ def Test(request):
 
         test.test_score = total_score
         test.save()
-
-        return render(request, 'User/HomePage.html')
+        return redirect("user:TestQuestions",test.id)
     else:
         data = tbl_test.objects.filter(user_id=request.session['uid'],test_status=0).count()
         if data > 0:

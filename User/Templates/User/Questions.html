@@ -1,66 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="timer">Online Test</title>
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script>
-        // Timer function to display countdown
-        function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Test</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .timer {
+      z-index: 99;
+      width: 140px;
+      text-align: center;
+      position: fixed;
+      top: 10%;
+      left: 88%;
+    }
+  </style>
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                display.textContent ="Online Test   "+ minutes + ":" + seconds;
+  <script>
 
-                if (--timer < 0) {
-                    timer = 0; // Timer ends
-                }
-            }, 1000);
-        }
+    function changeSession() {
+      sessionStorage.clear()
+    }
 
-        window.onload = function () {
-            var duration = 1800; // 30 minutes in seconds
-            var display = document.querySelector('#timer');
-            startTimer(duration, display);
-        };
-    </script>
+    window.onload = function () {
+      const currentTime = new Date().getTime();
+      let thirtyMinutesLater;
+
+      if (!sessionStorage.getItem('time')) {
+        thirtyMinutesLater = new Date(currentTime + 30 * 60 * 1000).getTime();
+        console.log(thirtyMinutesLater);
+        sessionStorage.setItem('time', thirtyMinutesLater);
+      } else {
+        thirtyMinutesLater = parseInt(sessionStorage.getItem('time'));
+      }
+
+      updateCountdown(thirtyMinutesLater);
+      const timer = setInterval(() => updateCountdown(thirtyMinutesLater), 1000);
+    }
+
+    function updateCountdown(thirtyMinutesLater) {
+      const now = new Date().getTime();
+      console.log(now);
+      console.log(thirtyMinutesLater);
+      const distance = thirtyMinutesLater - now;
+      console.log(distance);
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        sessionStorage.clear()
+        window.location = "{% url 'user:HomePage' %}"
+      }
+
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('timer').innerHTML = `Countdown: ${minutes}m ${seconds}s`;
+    }
+  </script>
 </head>
+
 <body>
-    <div class="container">
-        
-        <form method="POST" >
-            {% csrf_token %}
-            {% for question in Questions %}
-            <div class="col-md-12 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Question {{ forloop.counter }}</h5>
-                        <p class="card-text">{{ question.question_content }}</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_1 }}"> {{ question.option_1 }}</li>
-                            <li class="list-group-item"><input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_2 }}"> {{ question.option_2 }}</li>
-                            <li class="list-group-item"><input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_3 }}"> {{ question.option_3 }}</li>
-                            <li class="list-group-item"><input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_4 }}"> {{ question.option_4 }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <input type="hidden" name="question_ids" value="{{ question.question_id }}">
-            {% endfor %}
-            <div class="col-md-12 mb-4">
-                <input type="submit" class="btn btn-primary" value="Submit">
-            </div>
-        </form>
-        
+  <div class="card shadow-sm timer">
+    <div class="card-body">
+      <div class="card-title" id="timer"></div>
     </div>
+  </div>
+  <div class="container">
+    <form method="POST">
+      {% csrf_token %} {% for question in Questions %}
+      <div class="col-md-12 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Question {{ forloop.counter }}</h5>
+            <p class="card-text">{{ question.question_content }}</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_1 }}" />
+                {{ question.option_1 }}
+              </li>
+              <li class="list-group-item">
+                <input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_2 }}" />
+                {{ question.option_2 }}
+              </li>
+              <li class="list-group-item">
+                <input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_3 }}" />
+                {{ question.option_3 }}
+              </li>
+              <li class="list-group-item">
+                <input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_4 }}" />
+                {{ question.option_4 }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" name="question_ids" value="{{ question.question_id }}" />
+      {% endfor %}
+      <div class="col-md-12 mb-4">
+        <input onclick="changeSession()" type="submit" class="btn btn-primary" value="Submit" />
+      </div>
+    </form>
+  </div>
 </body>
+
 </html>
