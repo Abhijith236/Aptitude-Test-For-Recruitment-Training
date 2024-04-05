@@ -3,105 +3,74 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <form action="" method="post" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <form action="" method="post" class="mt-5">
       {% csrf_token %}
-      <table border="1">
-        <tr>
-          <td>Category</td>
-          <td>
-            <select name="sel_category" id="sel_category" required>
-              <option value="">----Select Category----</option>
-              {% for i in category %}
-              <option value="{{i.category_id}}">{{i.category_name}}</option>
-              {% endfor %}
-          </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Question</td>
-          <td>
-            <input
-              type="text"
-              name="txt_question_content"
-            />
-          </td>
-        </tr>
-        <tr>
-            <td>Score</td>
-            <td>
-              <input
-                type="text"
-                name="txt_question_score"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Option 1</td>
-            <td>
-              <input
-                type="text"
-                name="txt_option1"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Option 2</td>
-            <td>
-              <input
-                type="text"
-                name="txt_option2"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Option 3</td>
-            <td>
-              <input
-                type="text"
-                name="txt_option3"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Option 4</td>
-            <td>
-              <input
-                type="text"
-                name="txt_option4"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Answer</td>
-            <td>
-              <input
-                type="text"
-                name="txt_answer"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Answer Key</td>
-            <td>
-              <input
-                type="text"
-                name="txt_answer_key"
-              />
-            </td>
-          </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <input type="submit" value="save" />
-          </td>
-        </tr>
-      </table>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="sel_category">Category</label>
+                <select name="sel_category" id="sel_category" class="form-control" required>
+                  <option value="">----Select Category----</option>
+                  {% for i in category %}
+                  <option value="{{i.category_id}}">{{i.category_name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="txt_question_content">Question</label>
+                <input type="text" name="txt_question_content" id="txt_question_content" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_question_score">Score</label>
+                <input type="text" name="txt_question_score" id="txt_question_score" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_option1">Option 1</label>
+                <input type="text" name="txt_option1" id="txt_option1" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_option2">Option 2</label>
+                <input type="text" name="txt_option2" id="txt_option2" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_option3">Option 3</label>
+                <input type="text" name="txt_option3" id="txt_option3" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_option4">Option 4</label>
+                <input type="text" name="txt_option4" id="txt_option4" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_answer">Answer</label>
+                <input type="text" name="txt_answer" id="txt_answer" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_answer_key">Answer Key</label>
+                <input type="text" name="txt_answer_key" id="txt_answer_key" class="form-control">
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
-  </body>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
 {% endblock content %}

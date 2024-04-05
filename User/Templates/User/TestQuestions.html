@@ -1,55 +1,36 @@
+{% extends 'User/Include.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="timer">Online Test</title>
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
-        .green{
+        .green {
             background-color: green;
         }
-        .red{
+
+        .red {
             background-color: red;
         }
-        .blue{
+
+        .blue {
             background-color: blue;
         }
     </style>
-    <script>
-        // Timer function to display countdown
-        function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent ="Online Test   "+ minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = 0; // Timer ends
-                }
-            }, 1000);
-        }
-
-        window.onload = function () {
-            var duration = 1800; // 30 minutes in seconds
-            var display = document.querySelector('#timer');
-            startTimer(duration, display);
-        };
-    </script>
 </head>
+
 <body>
-    
+
     <div class="container">
-        
-        <form method="POST" >
+
+        <form method="POST">
             {% csrf_token %}
             {% for question in Questions %}
             <div class="col-md-12 mb-4">
@@ -66,7 +47,7 @@
                             {% elif question.question_id.option_1 == question.question_id.answer %}
                                 blue
                             {% endif %}
-                            " >{{ question.question_id.option_1 }}</li>
+                            ">{{ question.question_id.option_1 }}</li>
                             <li class="list-group-item 
                             {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_2 %}
                                 green
@@ -75,7 +56,7 @@
                             {% elif question.question_id.option_2 == question.question_id.answer %}
                                 blue
                             {% endif %}
-                            " >{{ question.question_id.option_2 }} </li>
+                            ">{{ question.question_id.option_2 }} </li>
                             <li class="list-group-item 
                             {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_3 %}
                                 green
@@ -84,7 +65,7 @@
                             {% elif question.question_id.option_3 == question.question_id.answer %}
                                 blue
                             {% endif %}
-                            " >{{ question.question_id.option_3 }} </li>
+                            ">{{ question.question_id.option_3 }} </li>
                             <li class="list-group-item 
                             {% if question.question_id.answer == question.test_question_answer and question.question_id.answer == question.question_id.option_4 %}
                                 green
@@ -93,14 +74,27 @@
                             {% elif question.question_id.option_4 == question.question_id.answer %}
                                 blue
                             {% endif %}
-                            " >{{ question.question_id.option_4 }} </li>
+                            ">{{ question.question_id.option_4 }} </li>
                         </ul>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </form>
-        
+
     </div>
+    <script>
+        window.addEventListener('beforeunload', function(e) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+        });
+    </script>
+    
+    
 </body>
+
 </html>
+
+{% endblock %}

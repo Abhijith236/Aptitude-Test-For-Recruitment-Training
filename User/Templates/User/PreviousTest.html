@@ -3,29 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attended Test Details </title>
+    <title>Attended Test Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Attended Test Details (Performance : {{mae}})</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>SL. No</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for test in attended_tests %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Attended Test Details (Performance: {{mae}})</h1>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ test.test_date }}</td>
-                    <td>{{ test.test_start_time }}</td>
-                    <td><a href="{% url 'user:TestQuestions' test.test_id %}">View Questions</a></td>
+                    <th>SL. No</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>Score</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for test in attended_tests %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ test.test_date }}</td>
+                        <td>{{ test.test_start_time }}</td>
+                        <td>{{ test.test_score }}</td>
+                        <td><a href="{% url 'user:TestQuestions' test.test_id %}" class="btn btn-primary">View Questions</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery (optional if you need JavaScript functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -89,6 +89,7 @@ def Test(request):
         test.test_end_time = timezone.now()
         test.test_status = '1'
 
+        tid=test.test_id
         total_score = 0 
 
         for question in random_questions:
@@ -108,7 +109,7 @@ def Test(request):
 
         test.test_score = total_score
         test.save()
-        return redirect("user:TestQuestions",test.id)
+        return redirect("user:TestQuestions",tid)
     else:
         data = tbl_test.objects.filter(user_id=request.session['uid'],test_status=0).count()
         if data > 0:
@@ -157,6 +158,7 @@ def PreviousTest(request):
         # Retrieve all tests for the user, selecting 'test_date' and 'test_score' fields
         tests = tbl_test.objects.filter(user_id=request.session['uid']).values('test_date', 'test_score')
         
+        
         # Convert 'test_date' field of each test to timestamp representation
         for test in tests:
             test['test_date'] = datetime.combine(test['test_date'], datetime.min.time()).timestamp()
@@ -180,6 +182,7 @@ def PreviousTest(request):
         
         # Calculate Mean Absolute Error (MAE)
         mae = mean_absolute_error(y, y_pred)
+        mae = round(mae)
     
     # Render a template with MAE and attended test information
     return render(request, 'User/PreviousTest.html', {'mae': mae, 'attended_tests': attended_tests})

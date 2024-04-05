@@ -3,87 +3,79 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
     <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <table border="1">
-        <tr>
-          <td>Name</td>
-          <td>
-            <input
-              type="text"
-              name="txt_name"
-            />
-          </td>
-        </tr>
-        <tr>
-            <td>Contact</td>
-            <td>
-              <input
-                type="text"
-                name="txt_contact"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>
-              <input
-                type="text"
-                name="txt_email"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Photo</td>
-            <td>
-              <input
-                type="file"
-                name="file_photo"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Password</td>
-            <td>
-              <input
-                type="text"
-                name="txt_password"
-              />
-            </td>
-          </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <input type="submit" value="save" />
-          </td>
-        </tr>
-      </table>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="txt_name">Name</label>
+                <input type="text" name="txt_name" id="txt_name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_contact">Contact</label>
+                <input type="text" name="txt_contact" id="txt_contact" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="txt_email">Email</label>
+                <input type="text" name="txt_email" id="txt_email" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="file_photo">Photo</label>
+                <input type="file" name="file_photo" id="file_photo" class="form-control-file">
+              </div>
+              <div class="form-group">
+                <label for="txt_password">Password</label>
+                <input type="password" name="txt_password" id="txt_password" class="form-control">
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
-    <table>
-      <tr>
-        <th>Si No</th>
-        <th>Name</th>
-        <th>Contact</th>
-        <th>Email</th>
-        <th>Action</th>
-      </tr>
-      {% for i in master %}
-      <tr>
-        <td>{{forloop.counter}}</td>
-        <td>{{i.master_name}}</td>
-        <td>{{i.master_contact}}</td>
-        <td>{{i.master_email}}</td>
-        <td>
-            <a href="{% url 'admin:DeleteMaster' i.master_id %}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </body>
+    <div class="container mt-5">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Si No</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in master %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.master_name }}</td>
+            <td>{{ i.master_contact }}</td>
+            <td>{{ i.master_email }}</td>
+            <td>
+              <a href="{% url 'admin:DeleteMaster' i.master_id %}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
 {% endblock content %}
