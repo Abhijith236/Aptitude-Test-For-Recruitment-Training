@@ -4,7 +4,7 @@ app_name="master"
 urlpatterns = [
     path('HomePage/', views.HomePage,name='HomePage'),
     path('Questions/', views.Questions,name='Questions'),
-
-     path('Logout/',views.Logout,name="Logout"),
+    path('Submit',views.Submit,name='Submit'),
+    path('Logout/',views.Logout,name="Logout"),
 ]
     
