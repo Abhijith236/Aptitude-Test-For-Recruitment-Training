@@ -21,6 +21,7 @@ decorator==5.1.1
 defusedxml==0.7.1
 distlib==0.3.8
 Django==5.0.1
+django-mathfilters==1.0.0
 executing==2.0.1
 fastjsonschema==2.19.1
 filelock==3.13.1
@@ -126,4 +127,5 @@ wcwidth==0.2.13
 webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.7.0
+whitenoise==6.6.0
 widgetsnbextension==4.0.10
