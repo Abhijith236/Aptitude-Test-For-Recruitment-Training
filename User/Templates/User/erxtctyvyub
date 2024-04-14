@@ -1,0 +1,54 @@
+ <script>
+
+    function changeSession() {
+      sessionStorage.clear()
+    }
+
+    window.addEventListener('pageshow', 
+    function() {
+      const currentTime = new Date().getTime();
+      let thirtyMinutesLater;
+
+      if (!sessionStorage.getItem('time')) {
+        thirtyMinutesLater = new Date(currentTime + 30 * 60 * 1000).getTime();
+        sessionStorage.setItem('time', thirtyMinutesLater);
+      } else {
+        thirtyMinutesLater = parseInt(sessionStorage.getItem('time'));
+      }
+
+      updateCountdown(thirtyMinutesLater);
+      const timer = setInterval(() => updateCountdown(thirtyMinutesLater), 1000);
+    }
+
+    )
+
+    function updateCountdown(thirtyMinutesLater) {
+      const now = new Date().getTime();
+   
+      const distance = thirtyMinutesLater - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        sessionStorage.clear()
+        window.location = "{% url 'user:HomePage' %}"
+       }
+
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('timer').innerHTML = `Countdown: ${minutes}m ${seconds}s`;
+    }
+
+    
+    window.onbeforeunload = function() {
+      alert("no");
+  return "Are you sure you want to leave?";
+}
+    
+
+
+
+    
+
+
+  </script>

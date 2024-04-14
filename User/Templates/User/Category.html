@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body onload="sessionStorage.clear()">
     <div class="container">
         <div class="row justify-content-center mt-5">
             {% for category in categories %}
@@ -25,6 +25,19 @@
         </div>
     </div>
 </body>
+<script>
+  window.addEventListener('pageshow', function(event) {
+  var historyTraversal = event.persisted || 
+                        (typeof window.performance != 'undefined' && 
+                         window.performance.navigation.type === 2);
+  if (historyTraversal) {
+    // Clear session or perform other actions here
+    console.log('Navigated back, clearing session.');
+    sessionStorage.clear(); // Clear session storage
+    // You can also use localStorage.clear(); to clear local storage
+  }
+});
+</script>
 
 </html>
 {% endblock %}
