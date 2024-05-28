@@ -13,7 +13,7 @@ class tbl_test(models.Model):
 
 class tbl_test_question(models.Model):
     test_question_id = models.AutoField(primary_key=True)
-    test_question_answer=models.CharField(max_length=100)
+    test_question_answer=models.CharField(max_length=100,null=True)
     question_id=models.ForeignKey(tbl_question,on_delete=models.CASCADE)
     test_id=models.ForeignKey(tbl_test,on_delete=models.CASCADE)
     test_question_score=models.CharField(max_length=100)

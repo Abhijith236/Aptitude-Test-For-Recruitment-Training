@@ -1,7 +1,86 @@
 {% extends 'Admin/Include.html' %}
 {% load static %}
 {% block content %}
-<h2>
-  Home Page
-</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Homepage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 100%;
+        height: 100vh;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .instructions {
+        margin-top: 20px;
+      }
+
+      .instructions h2 {
+        color: #333;
+        font-size: 24px;
+      }
+
+      .instructions p {
+        margin-bottom: 10px;
+      }
+
+      .instructions ol {
+        list-style-type: none;
+        counter-reset: my-counter;
+      }
+
+      .instructions ol li {
+        counter-increment: my-counter;
+        margin-bottom: 10px;
+      }
+
+      .instructions ol li::before {
+        content: counter(my-counter) ".";
+        font-weight: bold;
+        color: #007bff; /* Blue color for the numbers */
+        margin-right: 5px;
+      }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to Admin Module Homepage</h1>
+    <div class="instructions">
+        <h2>Get Started:</h2>
+        <p>Here are simple steps to manage your admin tasks:</p>
+        <ol>
+            <li><strong>Add a New District Place:</strong></li>
+            <p>Click on "Add District Place" in the navigation menu. Fill out the required information and click "Submit" to save.</p>
+            <li><strong>Add a New Category:</strong></li>
+            <p>Go to the "Add Category" section. Enter the name and relevant details for the category, then click "Submit" to add it.</p>
+            <li><strong>Add a New Master:</strong></li>
+            <p>Visit the "Add Master" page, input the necessary information, and click "Submit" to save the master details.</p>
+        </ol>
+        
+    </div>
+</div>
+
+</body>
+</html>
+
 {% endblock content %}

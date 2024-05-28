@@ -12,4 +12,4 @@ class tbl_question(models.Model):
     option_4=models.CharField(max_length=500)
     answer=models.CharField(max_length=500)
     category_id=models.ForeignKey(tbl_category,on_delete=models.CASCADE)
-    answer_key=models.CharField(max_length=500)
+    answer_key=models.CharField(max_length=500,null=True)

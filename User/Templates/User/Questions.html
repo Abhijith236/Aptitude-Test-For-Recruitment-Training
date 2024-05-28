@@ -19,18 +19,23 @@
 
 
   <script>
+    window.addEventListener('beforeunload', function (e) {
+  var confirmationMessage = 'Are you sure you want to refresh? Your changes may not be saved.';
+  e.returnValue = confirmationMessage; // For older browsers
+  return confirmationMessage;
+});
 
     function changeSession() {
       sessionStorage.clear()
     }
 
-    window.onload = function () {
+    window.addEventListener('pageshow', 
+    function() {
       const currentTime = new Date().getTime();
       let thirtyMinutesLater;
 
       if (!sessionStorage.getItem('time')) {
         thirtyMinutesLater = new Date(currentTime + 30 * 60 * 1000).getTime();
-        console.log(thirtyMinutesLater);
         sessionStorage.setItem('time', thirtyMinutesLater);
       } else {
         thirtyMinutesLater = parseInt(sessionStorage.getItem('time'));
@@ -40,24 +45,37 @@
       const timer = setInterval(() => updateCountdown(thirtyMinutesLater), 1000);
     }
 
+    )
+
     function updateCountdown(thirtyMinutesLater) {
       const now = new Date().getTime();
-      console.log(now);
-      console.log(thirtyMinutesLater);
+   
       const distance = thirtyMinutesLater - now;
-      console.log(distance);
 
       if (distance <= 0) {
         clearInterval(timer);
         sessionStorage.clear()
         window.location = "{% url 'user:HomePage' %}"
-      }
+       }
 
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       document.getElementById('timer').innerHTML = `Countdown: ${minutes}m ${seconds}s`;
     }
+
+    
+    window.onbeforeunload = function() {
+      alert("no");
+  return "Are you sure you want to leave?";
+}
+    
+
+
+
+    
+
+
   </script>
 </head>
 
@@ -77,7 +95,7 @@
             <p class="card-text">{{ question.question_content }}</p>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <input type="radio" name="answer_{{ question.question_id }}" value="{{ question.option_1 }}" />
+                <input type="radio" required name="answer_{{ question.question_id }}" value="{{ question.option_1 }}" />
                 {{ question.option_1 }}
               </li>
               <li class="list-group-item">
